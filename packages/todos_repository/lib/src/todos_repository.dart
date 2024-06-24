@@ -1,8 +1,15 @@
-/// {@template todos_repository}
-// A repository that handles `todo` related requests.
-/// {@endtemplate}
-library;
+import 'package:todos_api/todos_api.dart';
+
+/// A repository that handles `todo` related requests.
 class TodosRepository {
-  /// {@macro todos_repository}
-  const TodosRepository();
+
+  const TodosRepository({
+    required TodosApi todosApi,
+  }) : _todosApi = todosApi;
+
+  final TodosApi _todosApi;
+
+  /// saves a [todo]
+  /// If a [todo] with the same id already exists, it will be replaced.
+  Future<void> saveTodo(Todo todo) => _todosApi.saveTodo(todo);
 }

@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:todos_api/src/models/models.dart';
 import 'package:uuid/uuid.dart';
 
+part 'todo.g.dart';
+
+@JsonSerializable()
 class Todo {
   Todo({
     required this.title,
@@ -31,4 +36,6 @@ class Todo {
   /// 
   /// Defaults to 'false'.
   final bool isCompleted;
+
+  static Todo fromJson(JsonMap json) => _$TodoFromJson(json);
 }
