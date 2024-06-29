@@ -24,16 +24,21 @@ class TodosOverviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todos'),
+        title: const Text('Todo List'),
       ),
       body: BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
         builder: (context, state) {
           return ListView(
             children: [
-              for (final todo in state)
-            ,],
+              for (final todo in state.filteredTodos)
+                ListTile(
+                  key: Key('todoListTile_dismissible_${todo.id}'),
+                  title: Text(todo.title),
+                ),
+            ],
           );
         },
       ),
-    )
+    );
+  }
 }

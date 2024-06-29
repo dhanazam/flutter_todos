@@ -7,8 +7,8 @@ import 'package:todos_repository/todos_repository.dart';
 part 'edit_todo_event.dart';
 part 'edit_todo_state.dart';
 
-class EditTodo extends Bloc<EditTodoEvent, EditTodoState> {
-  EditTodo({
+class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
+  EditTodoBloc({
     required TodosRepository todosRepository,
   })  : _todosRepository = todosRepository,
         super(const EditTodoState()) {

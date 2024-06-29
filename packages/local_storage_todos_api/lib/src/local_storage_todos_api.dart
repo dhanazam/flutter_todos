@@ -43,9 +43,16 @@ class LocalStorageTodosApi extends TodosApi {
   Future<void> saveTodo(Todo todo) {
     final todos = [..._todoStreamController.value];
     final todoIndex = todos.indexWhere((t) => t.id == todo.id);
-    if (to) todos.add(todo);
+    if (todoIndex >= 0) {
+      todos[todoIndex] = todo;
+    } else {
+      todos.add(todo);
+    }
 
     _todoStreamController.add(todos);
-    return;
+    return _setValue(kTodosCollectionKey, json.encode(todos));
   }
+
+  @override
+  Stream<List<Todo>> getTodos() => _todoStreamController.stream;
 }
