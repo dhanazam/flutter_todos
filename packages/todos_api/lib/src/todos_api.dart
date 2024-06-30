@@ -7,4 +7,8 @@ abstract class TodosApi {
   Stream<List<Todo>> getTodos();
 
   Future<void> saveTodo(Todo todo);
+
+  Future<void> deleteTodo(String id);
 }
+
+class TodoNotFoundException implements Exception {}

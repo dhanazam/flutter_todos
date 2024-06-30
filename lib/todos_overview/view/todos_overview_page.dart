@@ -34,6 +34,14 @@ class TodosOverviewView extends StatelessWidget {
                 ListTile(
                   key: Key('todoListTile_dismissible_${todo.id}'),
                   title: Text(todo.title),
+                  trailing: IconButton(
+                    key: Key('todoListTile_deleteIcon_${todo.id}'),
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      context.read<TodosOverviewBloc>()
+                      .add(TodosOverviewDeleted(todo));
+                    }
+                  ),
                 ),
             ],
           );
