@@ -51,4 +51,6 @@ class Todo {
   }
 
   static Todo fromJson(JsonMap json) => _$TodoFromJson(json);
+
+  JsonMap toJson() => _$TodoToJson(this);
 }

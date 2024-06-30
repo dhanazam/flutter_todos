@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 part 'edit_todo_event.dart';
@@ -30,6 +31,7 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
     EditTodoDescriptionChanged event,
     Emitter<EditTodoState> emit,
   ) {
+    debugPrint('state: $state');
     emit(state.copyWith(description: event.description));
   }
 
@@ -47,6 +49,7 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
       await _todosRepository.saveTodo(todo);
       emit(state.copyWith(status: EditTodoStatus.success));
     } catch (e) {
+      debugPrint('Error saving todo: $e');
       emit(state.copyWith(status: EditTodoStatus.failure));
     }
   }

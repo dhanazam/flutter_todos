@@ -21,11 +21,12 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: TodosOverviewPage(),
+    return Scaffold(
+      body: const TodosOverviewPage(),
       floatingActionButton: FloatingActionButton(
-        key: Key('homeView_addTodo_floatingActionButton'),
+        key: const Key('homeView_addTodo_floatingActionButton'),
         onPressed: () => Navigator.of(context).push(EditTodoPage.route()),
+        child: const Icon(Icons.add),
       ),
     );
   }
