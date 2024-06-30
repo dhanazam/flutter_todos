@@ -12,21 +12,25 @@ extension EditTodoStatusX on EditTodoStatus {
 class EditTodoState extends Equatable {
   const EditTodoState({
     this.status = EditTodoStatus.initial,
+    this.initialTodo,
     this.title = '',
     this.description = '',
   });
 
   final EditTodoStatus status;
+  final Todo? initialTodo;
   final String title;
   final String description;
 
   EditTodoState copyWith({
     EditTodoStatus? status,
+    Todo? initialTodo,
     String? title,
     String? description,
   }) {
     return EditTodoState(
       status: status ?? this.status,
+      initialTodo: initialTodo ?? this.initialTodo,
       title: title ?? this.title,
       description: description ?? this.description,
     );

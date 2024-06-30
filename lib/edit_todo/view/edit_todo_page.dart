@@ -6,11 +6,12 @@ import 'package:todos_repository/todos_repository.dart';
 class EditTodoPage extends StatelessWidget {
   const EditTodoPage({super.key});
 
-  static Route<void> route() {
+  static Route<void> route({ Todo? initialTodo }) {
     return MaterialPageRoute(
       builder: (context) => BlocProvider(
         create: (context) => EditTodoBloc(
           todosRepository: context.read<TodosRepository>(),
+          initialTodo: initialTodo
         ),
         child: const EditTodoPage(),
       ),
