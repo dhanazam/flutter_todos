@@ -28,6 +28,21 @@ class HomeView extends StatelessWidget {
         onPressed: () => Navigator.of(context).push(EditTodoPage.route()),
         child: const Icon(Icons.add),
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.list_rounded),
+              onPressed: () => {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () => {},
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
