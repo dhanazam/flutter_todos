@@ -17,4 +17,7 @@ class TodosRepository {
   /// Deletes a [todo] with the given [id].
   /// If no [todo] with the given [id] exists, a [TodoNotFoundException] will be thrown.
   Future<void> deleteTodo(String id) => _todosApi.deleteTodo(id);
+
+  /// Deletes all [todo]s.
+  Future<void> deleteAllTodos() => _todosApi.deleteAllTodos();
 }

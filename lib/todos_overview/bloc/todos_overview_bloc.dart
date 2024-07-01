@@ -15,6 +15,7 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
         super(const TodosOverviewState()) {
     on<TodosOverviewSubscriptionRequested>(_onSubscriptionRequested);
     on<TodosOverviewDeleted>(_onTodoDeleted);
+    on<TodosOverviewAllDeleted>(_onTodoDeletedAll);
   }
 
   final TodosRepository _todosRepository;
@@ -38,5 +39,13 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
     await _todosRepository.deleteTodo(
       event.todo.id,
     );
+  }
+
+  
+
+  FutureOr<void> _onTodoDeletedAll(
+    TodosOverviewAllDeleted event, Emitter<TodosOverviewState> emit
+  ) async {
+    await _todosRepository.deleteAllTodos();
   }
 }

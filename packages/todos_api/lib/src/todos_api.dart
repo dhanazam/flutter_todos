@@ -9,6 +9,8 @@ abstract class TodosApi {
   Future<void> saveTodo(Todo todo);
 
   Future<void> deleteTodo(String id);
+  
+  Future<void> deleteAllTodos();
 }
 
 class TodoNotFoundException implements Exception {}

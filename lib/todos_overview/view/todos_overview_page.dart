@@ -26,6 +26,17 @@ class TodosOverviewView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
+        actions: [
+          IconButton(
+            key: const Key('todosOverviewPage_deleteAll_iconButton'),
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              context.read<TodosOverviewBloc>().add(
+                const TodosOverviewAllDeleted(),
+              );
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
         builder: (context, state) {

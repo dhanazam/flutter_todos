@@ -40,6 +40,9 @@ class LocalStorageTodosApi extends TodosApi {
   }
 
   @override
+  Stream<List<Todo>> getTodos() => _todoStreamController.stream;
+
+  @override
   Future<void> saveTodo(Todo todo) {
     final todos = [..._todoStreamController.value];
     final todoIndex = todos.indexWhere((t) => t.id == todo.id);
@@ -67,5 +70,11 @@ class LocalStorageTodosApi extends TodosApi {
   }
 
   @override
-  Stream<List<Todo>> getTodos() => _todoStreamController.stream;
+  Future<void> deleteAllTodos() async {
+    final todos = [..._todoStreamController.value];
+    todos.clear();
+    debugPrint('deleteAllTodos: $todos');
+    _todoStreamController.add(todos);
+    await _setValue(kTodosCollectionKey, json.encode(todos));
+  }
 }

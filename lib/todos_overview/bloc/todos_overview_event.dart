@@ -19,3 +19,7 @@ class TodosOverviewDeleted extends TodosOverviewEvent {
   @override
   List<Object> get props => [todo];
 }
+
+class TodosOverviewAllDeleted extends TodosOverviewEvent {
+  const TodosOverviewAllDeleted();
+}
