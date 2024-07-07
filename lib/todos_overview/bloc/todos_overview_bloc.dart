@@ -33,18 +33,18 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
   }
 
   FutureOr<void> _onTodoDeleted(
-    TodosOverviewDeleted event, 
-    Emitter<TodosOverviewState> emit)
-  async {
+    TodosOverviewDeleted event,
+    Emitter<TodosOverviewState> emit,
+  ) async {
+    emit(state.copyWith(lastDeletedTodo: () => event.todo));
     await _todosRepository.deleteTodo(
       event.todo.id,
     );
   }
 
-  
-
   FutureOr<void> _onTodoDeletedAll(
-    TodosOverviewAllDeleted event, Emitter<TodosOverviewState> emit
+    TodosOverviewAllDeleted event,
+    Emitter<TodosOverviewState> emit,
   ) async {
     await _todosRepository.deleteAllTodos();
   }

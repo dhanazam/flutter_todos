@@ -38,38 +38,59 @@ class TodosOverviewView extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
-        builder: (context, state) {
-          if (state.todos.isEmpty) {
-            return const Center(
-              child: Text('Tap + to add a new todo'),
-            );
-          }
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<TodosOverviewBloc, TodosOverviewState>(
+            listenWhen: (previous, current) =>
+                previous.lastDeletedTodo != current.lastDeletedTodo &&
+                current.lastDeletedTodo != null,
+            listener: (context, state) {
+              final deletedTodo = state.lastDeletedTodo!;
+              final messenger = ScaffoldMessenger.of(context);
+              // ignore: cascade_invocations
+              messenger
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text('Deleted "${deletedTodo.title}"'),
+                  ),
+                );
+            },
+          ),
+        ],
+        child: BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
+          builder: (context, state) {
+            if (state.todos.isEmpty) {
+              return const Center(
+                child: Text('Tap + to add a new todo'),
+              );
+            }
 
-          return ListView(
-            children: [
-              for (final todo in state.filteredTodos)
-                ListTile(
-                  key: Key('todoListTile_dismissible_${todo.id}'),
-                  title: Text(todo.title),
-                  trailing: IconButton(
-                    key: Key('todoListTile_deleteIcon_${todo.id}'),
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      context
-                          .read<TodosOverviewBloc>()
-                          .add(TodosOverviewDeleted(todo));
+            return ListView(
+              children: [
+                for (final todo in state.filteredTodos)
+                  ListTile(
+                    key: Key('todoListTile_dismissible_${todo.id}'),
+                    title: Text(todo.title),
+                    trailing: IconButton(
+                      key: Key('todoListTile_deleteIcon_${todo.id}'),
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        context
+                            .read<TodosOverviewBloc>()
+                            .add(TodosOverviewDeleted(todo));
+                      },
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        EditTodoPage.route(initialTodo: todo),
+                      );
                     },
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      EditTodoPage.route(initialTodo: todo),
-                    );
-                  },
-                ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
