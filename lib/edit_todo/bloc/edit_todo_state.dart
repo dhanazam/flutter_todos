@@ -22,6 +22,8 @@ class EditTodoState extends Equatable {
   final String title;
   final String description;
 
+  bool get isNewTodo => initialTodo == null;
+
   EditTodoState copyWith({
     EditTodoStatus? status,
     Todo? initialTodo,

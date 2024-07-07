@@ -6,12 +6,12 @@ import 'package:todos_repository/todos_repository.dart';
 class EditTodoPage extends StatelessWidget {
   const EditTodoPage({super.key});
 
-  static Route<void> route({ Todo? initialTodo }) {
+  static Route<void> route({Todo? initialTodo}) {
     return MaterialPageRoute(
       builder: (context) => BlocProvider(
         create: (context) => EditTodoBloc(
           todosRepository: context.read<TodosRepository>(),
-          initialTodo: initialTodo
+          initialTodo: initialTodo,
         ),
         child: const EditTodoPage(),
       ),
@@ -35,13 +35,19 @@ class EditTodoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isNewTodo = context.select(
+      (EditTodoBloc bloc) => bloc.state.isNewTodo,
+    );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Todo'),
+        title: Text(
+          isNewTodo ? 'Add Todo' : 'Edit Todo',
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             context.read<EditTodoBloc>().add(const EditTodoSubmitted()),
+        child: const Icon(Icons.check_rounded),
       ),
       body: const Padding(
         padding: EdgeInsets.all(8),
@@ -66,6 +72,7 @@ class _TitleField extends StatelessWidget {
       onChanged: (value) {
         context.read<EditTodoBloc>().add(EditTodoTitleChanged(value));
       },
+      maxLength: 50,
     );
   }
 }
@@ -82,6 +89,7 @@ class _DescriptionField extends StatelessWidget {
       onChanged: (value) {
         context.read<EditTodoBloc>().add(EditTodoDescriptionChanged(value));
       },
+      maxLength: 300,
     );
   }
 }
