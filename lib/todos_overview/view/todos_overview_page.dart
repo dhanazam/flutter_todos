@@ -32,14 +32,20 @@ class TodosOverviewView extends StatelessWidget {
             icon: const Icon(Icons.delete),
             onPressed: () {
               context.read<TodosOverviewBloc>().add(
-                const TodosOverviewAllDeleted(),
-              );
+                    const TodosOverviewAllDeleted(),
+                  );
             },
           ),
         ],
       ),
       body: BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
         builder: (context, state) {
+          if (state.todos.isEmpty) {
+            return const Center(
+              child: Text('Tap + to add a new todo'),
+            );
+          }
+
           return ListView(
             children: [
               for (final todo in state.filteredTodos)
@@ -50,9 +56,10 @@ class TodosOverviewView extends StatelessWidget {
                     key: Key('todoListTile_deleteIcon_${todo.id}'),
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      context.read<TodosOverviewBloc>()
-                      .add(TodosOverviewDeleted(todo));
-                    }
+                      context
+                          .read<TodosOverviewBloc>()
+                          .add(TodosOverviewDeleted(todo));
+                    },
                   ),
                   onTap: () {
                     Navigator.of(context).push(
